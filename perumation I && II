@@ -1,0 +1,65 @@
+//{ Driver Code Starts
+#include<bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+class Solution
+{
+    private:
+    void solve(string &S,set<string>&hashset,int i)
+    {
+        if(i>=S.length())
+        {
+            hashset.insert(S);
+            return;
+        }
+        
+        for(int j=i;j<S.length();j++)
+        {
+            swap(S[i],S[j]);
+            solve(S,hashset,i+1);
+            swap(S[i],S[j]);
+        }
+        
+    }
+	public:
+		vector<string>find_permutation(string S)
+		{
+		    // Code here there
+		    
+		    set<string> hashset;
+		   
+		    solve(S,hashset,0);
+		    
+		    vector<string> ans;
+		    for(auto it: hashset)
+		    {
+		        ans.push_back(it);
+		    }
+		   
+		    return ans;
+		}
+};
+
+
+
+//{ Driver Code Starts.
+int main(){
+    int t;
+    cin >> t;
+    while(t--)
+    {
+	    string S;
+	    cin >> S;
+	    Solution ob;
+	    vector<string> ans = ob.find_permutation(S);
+	    for(auto i: ans)
+	    {
+	    	cout<<i<<" ";
+	    }
+	    cout<<"\n";
+    }
+	return 0;
+}
+
+// } Driver Code Ends
