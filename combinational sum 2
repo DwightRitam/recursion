@@ -1,0 +1,31 @@
+class Solution {
+   public:
+
+    void findCombination(int ind, int target, vector < int > & arr, vector < vector < int >> & ans, vector < int > & ds) {
+  if (target == 0) {
+    ans.push_back(ds);
+    return;
+  }
+
+  for (int i = ind; i < arr.size(); i++) {
+      /* i> ind beacause,suppose 1 1 1 2 2 ,target 4,
+      /now suppose we took the 3rd index which is 2 ,the for the next iteraton
+       when we checking for the cond arr[i] == arr[i - 1],it will be true
+       but (2,2) will be a option so we have to make sure that it's not the
+       first time we are checkin for the element,*/
+    if (i > ind && arr[i] == arr[i - 1]) continue;
+    if (arr[i] > target) break;
+    ds.push_back(arr[i]);
+    findCombination(i + 1, target - arr[i], arr, ans, ds);
+    ds.pop_back();
+  }
+}
+
+   vector < vector < int >> combinationSum2(vector < int > & candidates, int target) {
+  sort(candidates.begin(), candidates.end());
+  vector < vector < int >> ans;
+  vector < int > ds;
+  findCombination(0, target, candidates, ans, ds);
+  return ans;
+}
+};
