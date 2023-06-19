@@ -1,0 +1,46 @@
+class Solution {
+    private:
+    bool isPalindrome(string s ,int start,int end)
+    {
+        while(start<=end)
+        {
+            if(s[start++] != s[end--]) return false;
+        }
+        return true;
+    }
+
+    void solve(int index, vector<vector<string>>&ans,vector<string>path,
+    string s)
+    {
+        if(index==s.size())
+        {
+            ans.push_back(path);
+            return;
+        }
+
+        //now check by putting at every index,if the substring is a palin
+
+        for(int i=index;i<s.size();i++)
+        {
+            if(isPalindrome(s,index,i))
+            {
+                path.push_back(s.substr(index,i-index+1));
+                solve(i+1,ans,path,s);
+                path.pop_back();
+            }
+        }
+    }
+public:
+    vector<vector<string>> partition(string s) {
+        /*recursion tree:
+        1-> check for all the indexes if the substring is a palindrome
+        2->if ,the substring is apalindrome,then only check for all the next
+        indexes */
+
+        vector<vector<string>>ans;
+        vector<string>path;
+
+        solve(0,ans,path,s);
+        return ans;
+    }
+};
