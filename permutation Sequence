@@ -1,0 +1,35 @@
+class Solution {
+public:
+    string getPermutation(int n, int k) {
+        // intuition
+        /*n = 3, k = 3,so we know there will be 6 permutation of the given 
+        data,beacause 3!=6,so from 0-1 ,wiil be permutaion which starts from 1
+        ,2-3 will be wiil be permutaion which starts from 2, and 4-5 will be''
+        for 3 ,so fact=6,and k=3,*/
+        vector<int> nums;
+        int fact=1;
+        //this is for calc the fact and storing the nums
+        for(int i=1;i<n;i++)
+        {
+            fact=fact*i;
+            nums.push_back(i);
+        }
+        nums.push_back(n);
+        //as we are checking the element at 0 based indexing
+        k--;
+        string ans;
+    //    cout << fact / k  << k;
+        while(true)
+        {
+            ans+=to_string(nums[k/fact]);
+            nums.erase(nums.begin()+k/fact);
+            if(nums.size()==0)
+            break;
+
+            k= k % fact;
+            fact=fact/nums.size();
+
+        }
+        return ans;
+    }
+};
